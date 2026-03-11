@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduGrade — Engineering SGPA/CGPA Tracker</title>
+  <meta name="description" content="EduGrade helps engineering students track their SGPA and CGPA across all semesters with a clean, intuitive interface." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand">
+      <svg class="nav-logo" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="36" height="36" rx="10" fill="currentColor" class="logo-bg"/>
+        <text x="18" y="24" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="700" font-size="16" fill="white">E</text>
+      </svg>
+      <span class="nav-title">EduGrade</span>
+    </div>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="btn-icon" aria-label="Toggle dark/light mode" title="Toggle theme">
+        <span class="sun-icon">☀️</span>
+        <span class="moon-icon">🌙</span>
+      </button>
+      <div class="user-avatar" aria-label="User avatar" title="Student">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- CGPA HERO CARD -->
+    <section class="hero-card" id="hero-card" aria-labelledby="cgpa-heading">
+      <div class="hero-left">
+        <p class="hero-label">Overall CGPA</p>
+        <div class="hero-cgpa-wrap">
+          <span class="hero-cgpa" id="hero-cgpa">—</span>
+          <span class="cgpa-badge" id="cgpa-badge"></span>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-value" id="stat-semesters">0</span>
+            <span class="stat-label">Semesters</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-value" id="stat-credits">0</span>
+            <span class="stat-label">Total Credits</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-value" id="stat-subjects">0</span>
+            <span class="stat-label">Subjects</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-right" aria-hidden="true">
+        <svg class="hero-chart" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polyline id="hero-sparkline" points="10,70 10,70" stroke="rgba(255,255,255,0.6)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle id="hero-dot" cx="10" cy="70" r="4" fill="white" opacity="0.8"/>
+        </svg>
+        <p class="hero-trend-label">SGPA Trend</p>
+      </div>
+    </section>
+
+    <!-- ACTIONS BAR -->
+    <div class="actions-bar">
+      <h2 class="section-title">My Semesters</h2>
+      <button id="add-semester-btn" class="btn-primary" aria-label="Add a new semester">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 4a1 1 0 011 1v4h4a1 1 0 110 2h-4v4a1 1 0 11-2 0v-4H5a1 1 0 110-2h4V5a1 1 0 011-1z"/></svg>
+        Add Semester
+      </button>
+    </div>
+
+    <!-- SEMESTERS GRID -->
+    <div class="semesters-grid" id="semesters-grid">
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon" aria-hidden="true">🎓</div>
+        <p class="empty-title">No semesters yet</p>
+        <p class="empty-sub">Click "Add Semester" to start tracking your grades.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ADD SEMESTER MODAL -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Add Semester</h3>
+        <button class="btn-icon modal-close" id="modal-close" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="semester-select">Select Semester</label>
+          <select class="form-select" id="semester-select" aria-required="true">
+            <option value="">-- Choose Semester --</option>
+            <option value="1-1">1st Year, 1st Sem (1-1)</option>
+            <option value="1-2">1st Year, 2nd Sem (1-2)</option>
+            <option value="2-1">2nd Year, 1st Sem (2-1)</option>
+            <option value="2-2">2nd Year, 2nd Sem (2-2)</option>
+            <option value="3-1">3rd Year, 1st Sem (3-1)</option>
+            <option value="3-2">3rd Year, 2nd Sem (3-2)</option>
+            <option value="4-1">4th Year, 1st Sem (4-1)</option>
+            <option value="4-2">4th Year, 2nd Sem (4-2)</option>
+          </select>
+        </div>
+        <div class="modal-table-wrap">
+          <table class="subject-table" id="modal-subject-table" aria-label="Enter subjects for the semester">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Subject Name</th>
+                <th>Credits</th>
+                <th>Grade</th>
+                <th>Grade Points</th>
+                <th aria-label="Delete"></th>
+              </tr>
+            </thead>
+            <tbody id="modal-tbody"></tbody>
+          </table>
+        </div>
+        <button class="btn-secondary" id="modal-add-row" aria-label="Add subject row">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 4a1 1 0 011 1v4h4a1 1 0 110 2h-4v4a1 1 0 11-2 0v-4H5a1 1 0 110-2h4V5a1 1 0 011-1z"/></svg>
+          Add Subject Row
+        </button>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-sgpa-preview">
+          Computed SGPA: <strong id="modal-sgpa-preview">—</strong>
+        </div>
+        <div class="modal-footer-btns">
+          <button class="btn-ghost" id="modal-cancel">Cancel</button>
+          <button class="btn-primary" id="modal-submit" disabled aria-disabled="true">Save Semester</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
